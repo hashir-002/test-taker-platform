@@ -5,12 +5,12 @@ import { auth } from "@/firebase/config";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 type NavItem = {
   href: string;
   label: string;
-  icon: JSX.Element;
+  icon: ReactNode;
 };
 
 const navItems: NavItem[] = [
