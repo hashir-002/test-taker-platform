@@ -147,57 +147,64 @@ export default function TestDetailPage() {
 
             {!showPinDialog && (
               <>
-                <div className="mt-6 space-y-6">
-                  {test.questions.map((question, questionIndex) => (
-                    <article
-                      key={`question-${questionIndex}`}
-                      className="rounded-lg border border-slate-200 p-4"
-                    >
-                      <h2 className="font-semibold text-slate-900">
-                        {questionIndex + 1}. {question.question}
-                      </h2>
-                      <div className="mt-3 space-y-2">
-                        {question.options.map((option, optionIndex) => (
-                          <label
-                            key={`question-${questionIndex}-option-${optionIndex}`}
-                            className="flex items-center gap-3 rounded-md border border-slate-200 px-3 py-2"
-                          >
-                            <input
-                              type="radio"
-                              name={`question-${questionIndex}`}
-                              checked={
-                                selectedAnswers[String(questionIndex)] === optionIndex
-                              }
-                              onChange={() => handleSelect(questionIndex, optionIndex)}
-                              disabled={isSubmitted}
-                            />
-                            <span className="text-slate-700">{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  {!isSubmitted ? (
-                    <button
-                      type="button"
-                      onClick={handleSubmitTest}
-                      disabled={!canSubmit || submitting}
-                      className="rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70"
-                    >
-                      {submitting ? "Submitting..." : "Submit Test"}
-                    </button>
-                  ) : (
+                {isSubmitted ? (
+                  <div className="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-6 text-center">
+                    <p className="text-lg font-semibold text-emerald-800">
+                      Seems you have completed the test...
+                    </p>
                     <Link
                       href={`/test/${testId}/result`}
-                      className="rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white transition hover:bg-emerald-500"
+                      className="mt-4 inline-block rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white transition hover:bg-emerald-500"
                     >
                       View Result
                     </Link>
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="mt-6 space-y-6">
+                      {test.questions.map((question, questionIndex) => (
+                        <article
+                          key={`question-${questionIndex}`}
+                          className="rounded-lg border border-slate-200 p-4"
+                        >
+                          <h2 className="font-semibold text-slate-900">
+                            {questionIndex + 1}. {question.question}
+                          </h2>
+                          <div className="mt-3 space-y-2">
+                            {question.options.map((option, optionIndex) => (
+                              <label
+                                key={`question-${questionIndex}-option-${optionIndex}`}
+                                className="flex items-center gap-3 rounded-md border border-slate-200 px-3 py-2"
+                              >
+                                <input
+                                  type="radio"
+                                  name={`question-${questionIndex}`}
+                                  checked={
+                                    selectedAnswers[String(questionIndex)] === optionIndex
+                                  }
+                                  onChange={() => handleSelect(questionIndex, optionIndex)}
+                                  disabled={isSubmitted}
+                                />
+                                <span className="text-slate-700">{option}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={handleSubmitTest}
+                        disabled={!canSubmit || submitting}
+                        className="rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70"
+                      >
+                        {submitting ? "Submitting..." : "Submit Test"}
+                      </button>
+                    </div>
+                  </>
+                )}
               </>
             )}
           </section>

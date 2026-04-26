@@ -5,10 +5,12 @@ import { database } from "@/firebase/config";
 import { onValue, ref, update } from "firebase/database";
 import { useParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import { marked } from "marked";
 
 type Note = {
   heading: string;
-  content: string;
+  content?: string;
+  link?: string;
   pin: number;
   locked?: boolean;
 };
@@ -21,6 +23,8 @@ export default function NoteDetailPage() {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
   const [checkingPin, setCheckingPin] = useState(false);
+  const [markdownHtml, setMarkdownHtml] = useState("");
+  const [loadingMarkdown, setLoadingMarkdown] = useState(false);
 
   useEffect(() => {
     if (!noteId) return;
@@ -33,6 +37,31 @@ export default function NoteDetailPage() {
 
     return () => unsubscribe();
   }, [noteId]);
+
+  useEffect(() => {
+    if (!note?.link || note.locked) {
+      setMarkdownHtml("");
+      return;
+    }
+
+    setLoadingMarkdown(true);
+    fetch(note.link)
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch markdown preview.");
+        }
+        return response.text();
+      })
+      .then(async (markdown) => {
+        const html = await Promise.resolve(marked.parse(markdown));
+        setMarkdownHtml(html);
+      })
+      .catch((error) => {
+        console.error(error);
+        setMarkdownHtml("<p class='text-red-600'>Failed to load markdown preview.</p>");
+      })
+      .finally(() => setLoadingMarkdown(false));
+  }, [note?.link, note?.locked]);
 
   async function handlePinSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -69,10 +98,25 @@ export default function NoteDetailPage() {
           <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <h1 className="text-3xl font-bold text-slate-900">{note.heading}</h1>
             {!showPinDialog && (
-              <div
-                className="prose mt-6 max-w-none text-slate-800"
-                dangerouslySetInnerHTML={{ __html: note.content }}
-              />
+              <div className="mt-6">
+                {note.link ? (
+                  loadingMarkdown ? (
+                    <p className="text-slate-600">Loading markdown preview...</p>
+                  ) : (
+                    <div
+                      className="prose max-w-none text-slate-800"
+                      dangerouslySetInnerHTML={{ __html: markdownHtml }}
+                    />
+                  )
+                ) : note.content ? (
+                  <div
+                    className="prose mt-6 max-w-none text-slate-800"
+                    dangerouslySetInnerHTML={{ __html: note.content }}
+                  />
+                ) : (
+                  <p className="text-slate-600">No preview available.</p>
+                )}
+              </div>
             )}
           </article>
         )}

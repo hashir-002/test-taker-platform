@@ -15,7 +15,7 @@ export default function AdminPanelPage() {
             Manage notes and tests from one place.
           </p>
 
-          <section className="mt-8 grid gap-6 md:grid-cols-2">
+          <section className="mt-8 grid gap-6 md:grid-cols-3">
             <Link
               href="/admin/notes"
               className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
@@ -33,6 +33,16 @@ export default function AdminPanelPage() {
               <h2 className="text-xl font-semibold text-slate-900">Add Test</h2>
               <p className="mt-2 text-sm text-slate-600">
                 Create and manage tests for your learners.
+              </p>
+            </Link>
+
+            <Link
+              href="/admin/results"
+              className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <h2 className="text-xl font-semibold text-slate-900">Check Results</h2>
+              <p className="mt-2 text-sm text-slate-600">
+                View and analyze test results from students.
               </p>
             </Link>
           </section>
