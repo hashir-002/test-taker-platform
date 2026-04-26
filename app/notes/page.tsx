@@ -12,14 +12,6 @@ type Note = {
   content: string;
 };
 
-function getPreview(contentHtml: string) {
-  const plainText = contentHtml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-  if (!plainText) return "";
-  const words = plainText.split(" ");
-  const previewWords = words.slice(0, 15).join(" ");
-  return words.length > 15 ? `${previewWords}...` : previewWords;
-}
-
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [loadingNotes, setLoadingNotes] = useState(true);
@@ -103,7 +95,7 @@ export default function NotesPage() {
                     <p className="mt-1 text-sm text-slate-500">Quick preview of the note content.</p>
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-6 text-slate-600">{getPreview(note.content)}</p>
+                <p className="mt-4 text-sm leading-6 text-slate-600">Click to view the full note content.</p>
               </Link>
             ))}
           </div>

@@ -1,4 +1,133 @@
+@import 'katex/dist/katex.min.css';
+@import "highlight.js/styles/github.css";
 @import "tailwindcss";
+
+.markdown-body {
+  color: #0f172a;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.markdown-body h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.markdown-body h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.markdown-body h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.markdown-body p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body blockquote {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.markdown-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.markdown-body pre {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 1rem;
+  background: #f8fafc;
+  color: #0f172a;
+}
+.markdown-body pre code {
+  background: transparent;
+  color: inherit;
+}
+
+.markdown-body ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 1.5rem;
+  color: #0f172a;
+}
+
+.markdown-body ul li {
+  margin-top: 0.5rem;
+}
+
+.markdown-body ul li::marker {
+  color: #0f172a;
+}
+.markdown-body ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 1.5rem;
+}
+
+.markdown-body ul li {
+  margin-top: 0.5rem;
+}
+
+.markdown-body ul li::marker {
+  color: #0f172a;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid #cbd5e1;
+  padding: 0.75rem 1rem;
+}
+
+.markdown-body th {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 2rem 0;
+}
+
+.markdown-body a {
+  color: #2563eb;
+  text-decoration: underline;
+}
 
 :root {
   --background: #f8fafc;

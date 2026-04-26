@@ -5,7 +5,7 @@ import { database } from "@/firebase/config";
 import { onValue, ref, update } from "firebase/database";
 import { useParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { marked } from "marked";
+import MarkdownViewer from "@/components/MarkdownViewer";
 
 type Note = {
   heading: string;
@@ -53,8 +53,7 @@ export default function NoteDetailPage() {
         return response.text();
       })
       .then(async (markdown) => {
-        const html = await Promise.resolve(marked.parse(markdown));
-        setMarkdownHtml(html);
+        setMarkdownHtml(markdown);
       })
       .catch((error) => {
         console.error(error);
@@ -103,16 +102,14 @@ export default function NoteDetailPage() {
                   loadingMarkdown ? (
                     <p className="text-slate-600">Loading markdown preview...</p>
                   ) : (
-                    <div
-                      className="prose max-w-none text-slate-800"
-                      dangerouslySetInnerHTML={{ __html: markdownHtml }}
-                    />
+                    <div className="prose max-w-none text-slate-800">
+                      <MarkdownViewer content={markdownHtml} />
+                    </div>
                   )
                 ) : note.content ? (
-                  <div
-                    className="prose mt-6 max-w-none text-slate-800"
-                    dangerouslySetInnerHTML={{ __html: note.content }}
-                  />
+                  <div className="prose mt-6 max-w-none text-slate-800">
+                    <MarkdownViewer content={note.content} />
+                  </div>
                 ) : (
                   <p className="text-slate-600">No preview available.</p>
                 )}
